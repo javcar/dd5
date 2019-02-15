@@ -1,36 +1,26 @@
 package org.javi.dd5;
 
+import java.util.EnumMap;
+
 public class Abilities {
 
-    private Ability strength;    
-    private Ability dexterity;
-    private Ability constitution;
-    private Ability intelligence;
-    private Ability wisdom;
-    private Ability charisma;
+    private EnumMap<Ability, Integer> abilities = new EnumMap<Ability, Integer>(Ability.class);
 
-    Ability getStregth() {
-        return this.strength;
+    public Abilities() {
+        this.abilities.put(Ability.Strength, 10);
+        this.abilities.put(Ability.Dexterity, 10);
+        this.abilities.put(Ability.Constitution, 10);
+        this.abilities.put(Ability.Intelligence, 10);
+        this.abilities.put(Ability.Wisdom, 10);
+        this.abilities.put(Ability.Charisma, 10);
     }
 
-    Ability getDexterity() {
-        return this.dexterity;
+    public int getScore(Ability ability) {
+        return this.abilities.get(ability);
     }
 
-    Ability getConstitution() {
-        return this.constitution;
-    }
-    
-    Ability getIntelligence() {
-        return this.intelligence;
-    }
-
-    Ability getWisdom() {
-        return this.wisdom;
-    }
-
-    Ability getCharisma() {
-        return this.charisma;
+    public int getModifier(Ability ability) {
+        return MathUtils.halve(10 - this.abilities.get(ability));        
     }
     
 }

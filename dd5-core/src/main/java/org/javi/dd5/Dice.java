@@ -11,12 +11,6 @@ public class Dice {
     private Random rand = new Random();
     private List<Integer> lastRollPool;
 
-    static long roll(String dicePool) {
-        String[] tokens = dicePool.split("d");
-        Dice dice = new Dice(Integer.parseInt(tokens[1]));
-        return dice.rollGetSum(Integer.parseInt(tokens[0]));
-    }
-
     public Dice(int diceFaces) {
         this.faces = diceFaces;
     }
