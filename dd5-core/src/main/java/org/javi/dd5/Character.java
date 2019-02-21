@@ -1,51 +1,38 @@
 package org.javi.dd5;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-
 public abstract class Character {
 
-    private Abilities abilities = new Abilities();
-    private Race race;
-    private List<Profession> professions = new ArrayList<Profession>();
-    private List<Ability> proficientSavingThrows = new ArrayList<Ability>();
-    private List<Skill> proficientSkills = new ArrayList<Skill>();
+    private Abilities abilities;
 
-    public Character() {
-        
-    }
-    
+    private Race race;
+
+    // General properties
+
+    private int age;
+
     public Abilities getAbilities() {
         return this.abilities;
     }
 
-    public Race getRace() {
-        return this.race;
+    public Character(Race race) {
+        this.race = race;
     }
 
-    public List<Profession> getProfessions() {
-        return this.professions;
+    // General properties
+
+    public int getAge() {
+        return this.age;
     }
 
-    public List<Ability> getProficientSavingThrows() {
-        return this.proficientSavingThrows;
+    public void setAge(int age) {
+        this.age = age;
     }
 
-    public List<Skill> getProficientSkills() {
-        return this.proficientSkills;
-    }
-
-    public int getLevel() {
-        return this.professions.stream().mapToInt(Profession::getLevel).sum();
-    }
-
-    public int getProficiencyBonus() {
-        return MathUtils.roundDown((7 + this.getLevel()) / 4);
-    };
-
-    public int getSpeed() {
-        return 0;
+    public void consumeUserAbilityChoiceSlots(Ability ability) {
+        if (this.race.getUserAbilityChoiceSlots() > 0) {
+            this.abilities.increaseScore(ability, +1);
+            this.race.consumeUserAbilityChoiceSlot();
+        }
     }
     
 }

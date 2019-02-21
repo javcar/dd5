@@ -22,5 +22,9 @@ public class Abilities {
     public int getModifier(Ability ability) {
         return MathUtils.halve(10 - this.abilities.get(ability));        
     }
+
+    public void increaseScore(Ability ability, int score) {
+        this.abilities.put(ability, this.abilities.get(ability) + score);
+    }
     
 }

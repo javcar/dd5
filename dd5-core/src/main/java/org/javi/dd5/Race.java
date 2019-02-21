@@ -6,28 +6,32 @@ import java.util.List;
 
 public abstract class Race {
 
-    private int speed = 30;
+    private Age age;
     private Size size = Size.Medium;
-    private int darkVisionRange = 0;
-    private int adultAge;
-    private int toolProficiencySlots = 0;
-    private int hitPointsBonusWhenLevelUp = 0;
+    private int speed = 30;
+    private int darkVision = 0;
 
-    private EnumMap<Ability, Integer> grantedAbilityAdjustments = new EnumMap<Ability, Integer>(Ability.class);
-    private List<Language> grantedLanguages = new ArrayList<Language>();    
-    private List<Damage> grantedSavingThrowAdvantages = new ArrayList<Damage>();
-    private List<Damage> grantedResistances = new ArrayList<Damage>();
-    private List<Skill> grantedSkillProficiencies = new ArrayList<Skill>();
-    private List<Armor> grantedArmorProficiencies = new ArrayList<Armor>();
-    private List<Weapon> grantedWeaponProficiencies = new ArrayList<Weapon>();
-    private List<Tool> offeredToolProficiencies = new ArrayList<Tool>();    
+    private int userAbilityChoiceSlots = 0;
+    private int userSkillSlots = 0;
 
-    public int getSpeed() {
-        return this.speed;
+    private EnumMap<Ability, Integer> abilityAdjustments = new EnumMap<Ability, Integer>(Ability.class);
+    
+    private List<Skill> skillProficiencies = new ArrayList<Skill>();
+    private List<SkillFocus> skillFocusProficiencies = new ArrayList<SkillFocus>();    
+
+    private List<Ability> savingThrowProficiencies = new ArrayList<Ability>();
+    private List<Threat> threatSavingThrowProficiencies = new ArrayList<Threat>();
+    private List<AbilityThreat> abilityThreatSavingThrowProficiencies = new ArrayList<AbilityThreat>();
+
+    
+    // General properties
+
+    public Age getAge() {
+        return this.age;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public void setAge(Age age) {
+        this.age = age;
     }
 
     public Size getSize() {
@@ -38,76 +42,81 @@ public abstract class Race {
         this.size = size;
     }
 
-    public int getDarkVisionRange() {
-        return this.darkVisionRange;
+    public int getSpeed() {
+        return this.speed;
     }
 
-    public void setDarkVisionRange(int darkVisionRange) {
-        this.darkVisionRange = darkVisionRange;
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
-    public boolean canSeeInDarkness() {
-        return this.darkVisionRange != 0;
+    public int getDarkVision() {
+        return this.darkVision;
     }
 
-    public int getAdultAge() {
-        return this.adultAge;
+    public void setDarkVision(int darkVision) {
+        this.darkVision = darkVision;
     }
 
-    public void setAdultAge(int adultAge) {
-        this.adultAge = adultAge;
+    // User choices (abilities)
+
+    public int getUserAbilityChoiceSlots() {
+        return this.userAbilityChoiceSlots;
     }
 
-    public int getToolProficiencySlots() {
-        return this.toolProficiencySlots;
+    public void produceUserAbilityChoiceSlots(int choiceSlots) {
+        this.userAbilityChoiceSlots += choiceSlots;
     }
 
-    public void setToolProficiencySlots(int toolProficiencySlots) {
-        this.toolProficiencySlots = toolProficiencySlots;
+    public void consumeUserAbilityChoiceSlot() {
+        this.userAbilityChoiceSlots -= 1;
     }
 
-    public int getHitPointsBonusWhenLevelUp() {
-        return this.hitPointsBonusWhenLevelUp;
+    // User choices (skills)
+
+    public int getUserSkillSlots() {
+        return this.userSkillSlots;
     }
 
-    public void setHitPointsBonusWhenLevelUp(int hitPointsBonusWhenLevelUp) {
-        this.hitPointsBonusWhenLevelUp = hitPointsBonusWhenLevelUp;
+    public void produceUserSkillSlots(int skillSlots) {
+        this.userSkillSlots += skillSlots;
     }
 
-    public EnumMap<Ability, Integer> getGrantedAbilityAdjustments() {
-        return this.grantedAbilityAdjustments;
+    public void concumeUserSkillSlots(Skill skill) {
+        if (this.userSkillSlots > 0) {
+            this.skillProficiencies.add(skill);
+            this.userSkillSlots -= 1;
+        }
     }
 
-    public List<Language> getGrantedLanguages() {
-        return this.grantedLanguages;
+    // Ability checks
+
+    public EnumMap<Ability, Integer> getAbilityAdjustments() {
+        return this.abilityAdjustments;
     }
 
-    public List<Damage> getGrantedSavingThrowAdvantages() {
-        return this.grantedSavingThrowAdvantages;
+    // Skill checks
+
+    public List<Skill> getSkillProficiencies() { // add proficiency bonus to skill (ability) checks.
+        return this.skillProficiencies;
     }
 
-    public List<Damage> getGrantedResistances() {
-        return this.grantedResistances;
+    public List<SkillFocus> getSkillFocusProficiencies() { // add double proficiency bonus to skill checks (ability, focus).
+        return this.skillFocusProficiencies;
     }
 
-    public List<Skill> getGrantedSkillProficiencies() {
-        return this.grantedSkillProficiencies;
+    // Saving throw checks
+
+    public List<Ability> getSavingThrowProficiencies() { // adventage on saving throws vs that ability.
+        return this.savingThrowProficiencies;
     }
 
-    public List<Armor> getGrantedArmorProficiencies() {
-        return this.grantedArmorProficiencies;
+    public List<Threat> getThreatSavingThrowProficiencies() { // adventage on saving throws vs that threat.
+        return this.threatSavingThrowProficiencies;
     }
 
-    public List<Weapon> getGrantedWeaponProficiencies() {
-        return this.grantedWeaponProficiencies;
-    }
-
-    public List<Tool> getOfferedToolProficiencies() {
-        return this.offeredToolProficiencies;
-    }
-
-    public void collectSpeedAdjustments() {
-        /* Empty method */
+    public List<AbilityThreat> getAbilityThreatSavingThrowProficiencies() { // adventage on saving throws vs that ability & threat.
+        return this.abilityThreatSavingThrowProficiencies;
     }
     
 }

@@ -2,10 +2,10 @@ package org.javi.dd5;
 
 public enum Skill {
 
-    Acrobatics (Ability.Dexterity),
+    Acrobatic (Ability.Dexterity),
     AnimalHandling (Ability.Wisdom),
     Arcana (Ability.Intelligence),
-    Athletics (Ability.Strength),
+    Athletic (Ability.Strength),
     Deception (Ability.Charisma),
     History (Ability.Intelligence),
     Insight (Ability.Wisdom),
@@ -29,6 +29,11 @@ public enum Skill {
 
     public Ability getAbility() {
         return ability;
+    }
+
+    @Override
+    public String toString() {
+        return this.toString() + " (" + this.ability.toString() + ")";
     }
     
 }
