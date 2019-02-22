@@ -11,8 +11,18 @@ public abstract class Race {
     private int speed = 30;
     private int darkVision = 0;
 
-    private int userAbilityChoiceSlots = 0;
-    private int userSkillSlots = 0;
+    private int userChoiceAbilitySlots = 0;
+    private int userChoiceSkillSlots = 0;
+    private int userChoiceToolSlots = 0;
+    private int userChoiceLanguageSlots = 0;
+
+    private List<Tool> userChoiceToolOptions = new ArrayList<Tool>();
+    private List<Language> userChoiceLanguageOptions = new ArrayList<Language>();
+
+    private int hitPointBonusPerLevel = 0;
+    private int fullRestDuration = 8;
+    private boolean isLucky = false;
+    private boolean canMoveThroughLargerCreature = false;
 
     private EnumMap<Ability, Integer> abilityAdjustments = new EnumMap<Ability, Integer>(Ability.class);
     
@@ -22,7 +32,14 @@ public abstract class Race {
     private List<Ability> savingThrowProficiencies = new ArrayList<Ability>();
     private List<Threat> threatSavingThrowProficiencies = new ArrayList<Threat>();
     private List<AbilityThreat> abilityThreatSavingThrowProficiencies = new ArrayList<AbilityThreat>();
+    private List<Threat> threatImmunities = new ArrayList<Threat>();
 
+    private List<Tool> toolProficiencies = new ArrayList<Tool>();
+
+    private List<Armor> armorProficiencies = new ArrayList<Armor>();
+    private List<Weapon> weaponProficiencies = new ArrayList<Weapon>();
+
+    private List<Language> languages = new ArrayList<Language>();
     
     // General properties
 
@@ -58,35 +75,100 @@ public abstract class Race {
         this.darkVision = darkVision;
     }
 
+    public int getHitPointBonusPerLevel() {
+        return this.hitPointBonusPerLevel;
+    }
+
+    public void setHitPointBonusPerLevel(int hitPoints) {
+        this.hitPointBonusPerLevel = hitPoints;
+    }
+
+    public int getFullRestDuration() {
+        return this.fullRestDuration;
+    }
+
+    public void setFullRestDuration(int restDuration) {
+        this.fullRestDuration = restDuration;
+    }
+
+    public boolean getIsLucky() {
+        return this.isLucky;
+    }
+
+    public void setIsLucky(boolean isLucky) {
+        this.isLucky = isLucky;
+    }
+
+    public boolean getCanMoveThroughLargerCreature() {
+        return this.canMoveThroughLargerCreature;
+    }
+
+    public void setcanMoveThroughLargerCreature(boolean canMoveThroughLargerCreature) {
+        this.canMoveThroughLargerCreature = canMoveThroughLargerCreature;
+    }
+
     // User choices (abilities)
 
-    public int getUserAbilityChoiceSlots() {
-        return this.userAbilityChoiceSlots;
+    public int getUserChoiceAbilitySlots() {
+        return this.userChoiceAbilitySlots;
     }
 
-    public void produceUserAbilityChoiceSlots(int choiceSlots) {
-        this.userAbilityChoiceSlots += choiceSlots;
+    public void produceUserChoiceAbilitySlots(int abilitySlots) {
+        this.userChoiceAbilitySlots += abilitySlots;
     }
 
-    public void consumeUserAbilityChoiceSlot() {
-        this.userAbilityChoiceSlots -= 1;
+    public void consumeUserChoiceAbilitySlot() {
+        this.userChoiceAbilitySlots -= 1;
     }
 
     // User choices (skills)
 
-    public int getUserSkillSlots() {
-        return this.userSkillSlots;
+    public int getUserChoiceSkillSlots() {
+        return this.userChoiceSkillSlots;
     }
 
-    public void produceUserSkillSlots(int skillSlots) {
-        this.userSkillSlots += skillSlots;
+    public void produceUserChoiceSkillSlots(int skillSlots) {
+        this.userChoiceSkillSlots += skillSlots;
     }
 
-    public void concumeUserSkillSlots(Skill skill) {
-        if (this.userSkillSlots > 0) {
-            this.skillProficiencies.add(skill);
-            this.userSkillSlots -= 1;
-        }
+    public void consumeUserChoiceSkillSlots(Skill skill) {
+        this.userChoiceSkillSlots -= 1;
+    }
+
+    // User choices (tools)
+
+    public int getUserChoiceToolSlots() {
+        return this.userChoiceToolSlots;
+    }
+
+    public void produceUserChoiceToolSlots(int toolSlots) {
+        this.userChoiceToolSlots += toolSlots;
+    }
+
+    public void consumeUserChoiceToolSlot() {
+        this.userChoiceToolSlots -= 1;
+    }
+
+    public List<Tool> getUserChoiceToolOptions() {
+        return this.userChoiceToolOptions;
+    }
+
+    // User choices (languages)
+
+    public int getUserChoiceLanguageSlots() {
+        return this.userChoiceLanguageSlots;
+    }
+
+    public void produceUserChoiceLanguageSlots(int languageSlots) {
+        this.userChoiceLanguageSlots += languageSlots;
+    }
+
+    public void consumeUserChoiceLanguageSlot() {
+        this.userChoiceLanguageSlots -= 1;
+    }
+
+    public List<Language> getUserChoiceLanguageOptions() {
+        return this.userChoiceLanguageOptions;
     }
 
     // Ability checks
@@ -117,6 +199,34 @@ public abstract class Race {
 
     public List<AbilityThreat> getAbilityThreatSavingThrowProficiencies() { // adventage on saving throws vs that ability & threat.
         return this.abilityThreatSavingThrowProficiencies;
+    }
+
+    // Immunities
+
+    public List<Threat> getThreatImmunities() {
+        return this.threatImmunities;
+    }
+
+    // Tool proficiencies
+
+    public List<Tool> getToolProficiencies() {
+        return this.toolProficiencies;
+    }
+
+    // Armor & Weapon proficiencies
+
+    public List<Armor> getArmorProficiencies() {
+        return this.armorProficiencies;
+    }
+
+    public List<Weapon> getWeaponProficiencies() {
+        return this.weaponProficiencies;
+    }
+
+    // Languages
+
+    public List<Language> getLanguages() {
+        return this.languages;
     }
     
 }

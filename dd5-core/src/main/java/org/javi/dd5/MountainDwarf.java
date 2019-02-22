@@ -7,6 +7,15 @@ public abstract class MountainDwarf extends Dwarf {
         super();
 
         getAbilityAdjustments().put(Ability.Strength, +2);
+
+        grantArmorTraining();
+    }
+
+    // Helper methods
+
+    private void grantArmorTraining() {
+        getArmorProficiencies().addAll(Armor.getArmors(ArmorCategory.Light));
+        getArmorProficiencies().addAll(Armor.getArmors(ArmorCategory.Medium));
     }
 
 }

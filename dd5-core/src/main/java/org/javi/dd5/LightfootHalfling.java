@@ -7,6 +7,15 @@ public abstract class LightfootHalfling extends Halfling {
         super();
 
         getAbilityAdjustments().put(Ability.Charisma, +1);
+
+        grantNaturallyStealthy();
+        
+    }
+
+    // Helper methods
+
+    public void grantNaturallyStealthy() {
+        throw new UnsupportedOperationException(); // TODO
     }
 
 }

@@ -8,7 +8,15 @@ public abstract class StoutHalfling extends Halfling {
 
         getAbilityAdjustments().put(Ability.Constitution, +1);
 
+        grantResilience();
+        
+    }
+
+    // Helper methods
+
+    private void grantResilience() {
         getThreatSavingThrowProficiencies().add(Threat.Poison);
+        getThreatImmunities().add(Threat.Poison);
     }
 
 }

@@ -9,8 +9,28 @@ public abstract class Elf extends Race {
 
         getAbilityAdjustments().put(Ability.Dexterity, +2);
 
+        grantKeenSenses();
+        grantFeyAncestry();
+        grantTrance();
+
+        getLanguages().add(Language.Common);
+        getLanguages().add(Language.Elvish);
+
+    }
+
+    // Helper methods
+
+    private void grantKeenSenses() {
         getSkillProficiencies().add(Skill.Perception);
-        getThreatSavingThrowProficiencies().add(Threat.Charm);        
+    }
+
+    private void grantFeyAncestry() {
+        getThreatSavingThrowProficiencies().add(Threat.Charm);
+        getThreatImmunities().add(Threat.MagicSleep);
+    }
+
+    private void grantTrance() {
+        setFullRestDuration(4);
     }
 
 }

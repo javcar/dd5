@@ -13,6 +13,15 @@ public abstract class Human extends Race {
         getAbilityAdjustments().put(Ability.Wisdom, +1);
         getAbilityAdjustments().put(Ability.Charisma, +1);
 
+        grantExtraLanguage();
+
+    }
+
+    // Helper methods
+
+    private void grantExtraLanguage() {
+        produceUserChoiceLanguageSlots(1);
+        getUserChoiceLanguageOptions().addAll(Language.getLanguages());
     }
 
 }
